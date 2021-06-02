@@ -760,7 +760,7 @@ class SnowflakeCursor(object):
         if self._total_rowcount == -1 and not is_dml and data.get("total") is not None:
             self._total_rowcount = data["total"]
 
-        self._description = []
+        self._description: List[ResultMetadata] = []
 
         for column in data["rowtype"]:
             type_value = FIELD_NAME_TO_ID[column["type"].upper()]
@@ -840,7 +840,8 @@ class SnowflakeCursor(object):
                 self,
                 ProgrammingError,
                 {
-                    "msg": msg, "errno": errno,
+                    "msg": msg,
+                    "errno": errno,
                 },
             )
 
