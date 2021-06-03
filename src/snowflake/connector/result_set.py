@@ -155,7 +155,8 @@ class ResultSet(Iterable[List[Any]]):
         if table:
             return table.to_pandas(**kwargs)
         else:
-            return pandas.DataFrame(columns=self.batches[0]._column_names)
+            column_names = [col.name for col in self.batches[0].schema]
+            return pandas.DataFrame(columns=column_names)
 
     def _get_metrics(self) -> Dict[str, int]:
         """Sum up all the chunks' metrics and show them together."""
